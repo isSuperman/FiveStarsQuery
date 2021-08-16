@@ -8,13 +8,8 @@
           v-model="houseNumber"
         ></v-text-field>
       </v-col>
-      <v-col cols="2">
-        <v-btn color="primary" block large @click="query" :loading="querying">{{
-          querying ? "查询中" : "查询"
-        }}</v-btn>
-      </v-col>
-      <v-col cols="2">
-        <v-btn dark color="green" block large @click="resetData">重置</v-btn>
+      <v-col cols="4">
+        <v-btn color="primary" block large @click="query">查 询</v-btn>
       </v-col>
     </v-row>
 
@@ -125,16 +120,13 @@ export default {
     car: [],
     chu: [],
     showInfo: false,
-    querying: false,
   }),
   methods: {
     query: function () {
-      this.querying = true;
+      var allData = this.$store.state.wb;
       if (this.houseNumber == "") {
         alert("请输入房号");
-        this.querying = false;
       } else {
-        var allData = this.$store.state.wb;
         if (allData) {
           let hn = this.houseNumber;
           Object.assign(this.$data, this.$options.data());
@@ -201,9 +193,9 @@ export default {
       if (!this.name) {
         alert("没有找到相关记录！");
       }
-      if(this.name){
-        this.findCar(n_car_sheet, s_car_sheet)
-        this.findChu(chu_sheet)
+      if (this.name) {
+        this.findCar(n_car_sheet, s_car_sheet);
+        this.findChu(chu_sheet);
       }
     },
     findCar: function (n_car_sheet, s_car_sheet) {
