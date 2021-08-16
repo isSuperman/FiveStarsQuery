@@ -159,8 +159,6 @@ export default {
             }
           );
           this.findName(n_car_sheet, s_car_sheet, chu_sheet);
-          this.findCar(n_car_sheet, s_car_sheet);
-          this.findChu(chu_sheet);
         } else {
           alert("请先读取数据");
           this.$router.push({
@@ -200,10 +198,13 @@ export default {
           }
         }
       }
-      if(!this.name) {
-        alert("没有找到相关记录！")
+      if (!this.name) {
+        alert("没有找到相关记录！");
       }
-      
+      if(this.name){
+        this.findCar(n_car_sheet, s_car_sheet)
+        this.findChu(chu_sheet)
+      }
     },
     findCar: function (n_car_sheet, s_car_sheet) {
       for (const ncar of n_car_sheet) {
