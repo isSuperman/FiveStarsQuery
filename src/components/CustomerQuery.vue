@@ -1,19 +1,21 @@
 <template>
   <v-container>
     <v-row>
-        <v-col cols="8">
-          <v-text-field
-            label="请输入房号..."
-            prepend-icon="mdi-map-marker"
-            v-model="houseNumber"
-          ></v-text-field>
-        </v-col>
-        <v-col cols="2">
-          <v-btn color="primary" block large @click="query">查 询</v-btn>
-        </v-col>
-        <v-col cols="2">
-          <v-btn dark color="green" block large @click="resetData">重置</v-btn>
-        </v-col>
+      <v-col cols="8">
+        <v-text-field
+          label="请输入房号..."
+          prepend-icon="mdi-map-marker"
+          v-model="houseNumber"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="2">
+        <v-btn color="primary" block large @click="query" :loading="querying">{{
+          querying ? "查询中" : "查询"
+        }}</v-btn>
+      </v-col>
+      <v-col cols="2">
+        <v-btn dark color="green" block large @click="resetData">重置</v-btn>
+      </v-col>
     </v-row>
 
     <v-row v-show="showInfo" style="margin-top: -30px">
@@ -122,19 +124,21 @@ export default {
     name: "",
     car: [],
     chu: [],
-    showInfo: false
+    showInfo: false,
+    querying: false,
   }),
   methods: {
     query: function () {
+      this.querying = true;
       if (this.houseNumber == "") {
         alert("请输入房号");
+        this.querying = false;
       } else {
         var allData = this.$store.state.wb;
         if (allData) {
           let hn = this.houseNumber;
           Object.assign(this.$data, this.$options.data());
           this.houseNumber = hn;
-          this.showInfo = true;
           this.$emit("query_click", this.index);
 
           //正常车位表
@@ -166,31 +170,40 @@ export default {
       }
     },
     findName: function (n_car_sheet, s_car_sheet, chu_sheet) {
-      if (this.name == "") {
+      if (!this.name) {
         for (const item of n_car_sheet) {
           if (this.houseNumber == item[n_car_house_number]) {
             this.name = item[n_car_ower];
+            this.showInfo = true;
             console.log(this.name);
             console.log("success in n car");
-          } else if (this.name == "") {
-            for (const item1 of s_car_sheet) {
-              if (this.houseNumber == item1[s_car_house_number]) {
-                this.name = item1[s_car_ower];
-                console.log(this.name);
-                console.log("success in s car");
-              } else if (name == "") {
-                for (const item2 of chu_sheet) {
-                  if (this.houseNumber == item2[chu_house_number]) {
-                    this.name = item2[chu_ower];
-                    console.log(this.name);
-                    console.log("success in chu sheet");
-                  }
-                }
-              }
-            }
           }
         }
       }
+      if (!this.name) {
+        for (const item1 of s_car_sheet) {
+          if (this.houseNumber == item1[s_car_house_number]) {
+            this.name = item1[s_car_ower];
+            this.showInfo = true;
+            console.log(this.name);
+            console.log("success in s car");
+          }
+        }
+      }
+      if (!this.name) {
+        for (const item2 of chu_sheet) {
+          if (this.houseNumber == item2[chu_house_number]) {
+            this.name = item2[chu_ower];
+            this.showInfo = true;
+            console.log(this.name);
+            console.log("success in chu sheet");
+          }
+        }
+      }
+      if(!this.name) {
+        alert("没有找到相关记录！")
+      }
+      
     },
     findCar: function (n_car_sheet, s_car_sheet) {
       for (const ncar of n_car_sheet) {
@@ -234,8 +247,8 @@ export default {
     resetData: function () {
       this.index = 0;
       this.$emit("back_click", this.index);
-      this.showInfo = false
-      this.houseNumber = ""
+      this.showInfo = false;
+      this.houseNumber = "";
     },
   },
 };
