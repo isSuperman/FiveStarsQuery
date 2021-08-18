@@ -14,8 +14,6 @@
         <span>{{ btn.name }}</span>
       </v-btn>
     </v-app-bar>
-
-    <!-- 根据应用组件来调整你的内容 -->
     <v-main>
       <!-- 给应用提供合适的间距 -->
       <v-container fluid>
