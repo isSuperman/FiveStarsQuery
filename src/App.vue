@@ -23,7 +23,14 @@
         <router-view></router-view>
       </v-container>
     </v-main>
-
+    <v-footer absolute padless>
+      <v-card flat tile width="100%" class="primary text-right">
+        <v-divider></v-divider>
+        <v-card-text class="white--text">
+          {{ new Date().getFullYear() }} © <strong>Muzi</strong>
+        </v-card-text>
+      </v-card>
+    </v-footer>
     <!-- <v-bottom-navigation horizontal color="primary"> </v-bottom-navigation> -->
   </v-app>
 </template>
