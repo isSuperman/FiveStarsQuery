@@ -24,14 +24,14 @@
         <router-view></router-view>
       </v-container>
     </v-main>
-    <v-footer absolute padless>
+    <!-- <v-footer fixed padless>
       <v-card flat tile width="100%" class="primary text-right">
         <v-divider></v-divider>
         <v-card-text class="white--text">
           {{ new Date().getFullYear() }} © <strong>Muzi</strong>
         </v-card-text>
       </v-card>
-    </v-footer>
+    </v-footer> -->
   </v-app>
 </template>
 
@@ -114,4 +114,10 @@ export default {
 </script>
 
 <style lang="scss">
+ ::-webkit-scrollbar {
+     width: 0 !important;
+   }
+   ::-webkit-scrollbar {
+     width: 0 !important;height: 0;
+   }
 </style>
