@@ -125,9 +125,13 @@ export default {
     query: function () {
       var allData = this.$store.state.wb;
       if (this.houseNumber == "") {
-        alert("请输入房号");
+        this.$store.state.infoMsg = "请输入房号！";
+        this.$store.state.showInfo = true;
+
       } else {
         if (allData) {
+          this.$store.state.infoMsg = "";
+          this.$store.state.showInfo = false;
           let hn = this.houseNumber;
           Object.assign(this.$data, this.$options.data());
           this.houseNumber = hn;
@@ -152,7 +156,8 @@ export default {
           );
           this.findName(n_car_sheet, s_car_sheet, chu_sheet);
         } else {
-          alert("请先读取数据");
+          this.$store.state.infoMsg = "请先读取数据源！";
+          this.$store.state.showInfo = true;
           this.$router.push({
             path: "/",
           });
@@ -191,7 +196,8 @@ export default {
         }
       }
       if (!this.name) {
-        alert("没有找到相关记录！");
+        this.$store.state.infoMsg = "没有找到相关记录！";
+        this.$store.state.showInfo = true;
       }
       if (this.name) {
         this.findCar(n_car_sheet, s_car_sheet);

@@ -18,6 +18,9 @@
       <!-- 给应用提供合适的间距 -->
       <v-container fluid>
         <!-- 如果使用 vue-router -->
+        <v-col cols="12" v-show="this.$store.state.showInfo">
+          <Alert :msg="this.$store.state.infoMsg" />
+        </v-col>
         <router-view></router-view>
       </v-container>
     </v-main>
@@ -29,12 +32,15 @@
         </v-card-text>
       </v-card>
     </v-footer>
-    <!-- <v-bottom-navigation horizontal color="primary"> </v-bottom-navigation> -->
   </v-app>
 </template>
 
 <script>
+import Alert from "@/components/Alert";
 export default {
+  components: {
+    Alert,
+  },
   methods: {
     routerTo: function (btn) {
       if (window.location.hash.slice(1) != btn.url) {
@@ -45,17 +51,24 @@ export default {
               b.color = "primary";
             }
           }
+          this.$store.commit("setInfoMsg", "");
+          this.$store.commit("setShowInfo", false);
           this.$router.push({
             path: btn.url,
           });
         } else {
-          alert("请先读取数据");
+          console.log("没有读取到数据")
+          this.$store.commit("setInfoMsg", "请先读取数据源！");
+          this.$store.commit("setShowInfo", true);
         }
       }
     },
   },
   computed: {},
-  mounted: function () {},
+  mounted: function () {
+    this.$store.state.showInfo = false;
+    this.$store.state.infoMsg = "";
+  },
   data() {
     return {
       btns: [

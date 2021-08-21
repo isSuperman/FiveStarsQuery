@@ -136,6 +136,7 @@ export default {
       money: 0,
       zeng: 0,
     },
+    showInfo: false
   }),
   mounted: function () {
     let allData = this.$store.state.wb;
@@ -144,7 +145,7 @@ export default {
     }
   },
   components: {
-    Header,
+    Header
   },
   methods: {
     importf: function (obj) {
@@ -152,6 +153,8 @@ export default {
         location.reload();
         return;
       }
+      this.$store.state.showInfo = false;
+      this.$store.state.infoMsg = ""
       var f = obj;
       var reader = new FileReader();
       reader.onload = (e) => {

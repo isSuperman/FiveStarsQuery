@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <h2 class="display-1">{{title}}</h2>
+        <h2 class="display-1">{{ title }}</h2>
       </v-col>
     </v-row>
   </v-container>
@@ -11,13 +11,11 @@
 <script>
 export default {
   name: "Header",
-  props:{
-      title: String
+  props: {
+    title: String,
   },
   data() {
-      return {
-         
-      }
+    return {};
   },
 };
 </script>
